@@ -1,0 +1,7 @@
+#import "../fragments/selectedOrderItem.graphql"
+
+query SelectedOrderItem($id: String!) {
+  selectedOrderItem(id: $id) @client {
+    ...SelectedOrderItemFragment
+  }
+}

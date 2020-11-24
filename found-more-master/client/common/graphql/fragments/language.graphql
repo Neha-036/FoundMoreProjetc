@@ -1,0 +1,10 @@
+fragment LanguageFragment on Language {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  isoCode
+  articleCode
+  name
+}

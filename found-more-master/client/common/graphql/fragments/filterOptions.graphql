@@ -1,0 +1,16 @@
+fragment FilterOptionsFragment on FilterOptions {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  type
+  language {
+    id
+    isoCode
+    articleCode
+    name
+  }
+  storeType
+  size
+}

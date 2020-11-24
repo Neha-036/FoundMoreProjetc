@@ -1,0 +1,133 @@
+# import * from "./generated/prisma.graphql"
+
+
+# This is needed for File upload to work
+scalar Upload
+
+type Query {
+
+  me: User!
+  storeLanguages: [String]!
+
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  
+  # Known issue, the type usersConnection must be defined to extend the Brand type in index.ts
+  usersConnection: UserConnection!
+
+  brand(where: BrandWhereUniqueInput!): Brand
+  brandPersonalization: Brand
+  brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
+
+  store(where: StoreWhereUniqueInput!): Store
+  stores(where: StoreWhereInput, search: String, orderBy: StoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Store]!
+  storesConnection(where: StoreWhereInput, search: String, orderBy: StoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StoreConnection!
+
+  supplier(where: SupplierWhereUniqueInput!): Supplier
+  suppliers(where: SupplierWhereInput, orderBy: SupplierOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Supplier]!
+
+  product(where: ProductWhereUniqueInput!): Product
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
+
+  productCategory(where: ProductCategoryWhereUniqueInput!): ProductCategory
+  productCategories(where: ProductCategoryWhereInput, orderBy: ProductCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductCategory]!
+
+  orderTemplate(where: OrderTemplateWhereUniqueInput!): OrderTemplate
+  orderTemplates(where: OrderTemplateWhereInput, filterByLanguage: Boolean, search: String, orderBy: OrderTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderTemplate]!
+
+  order(where: OrderWhereUniqueInput!): Order
+  orders(where: OrderWhereInput, search: String, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
+
+  roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
+
+  languages(where: LanguageWhereInput, orderBy: LanguageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Language]!
+
+  supportPage(where: SupportPageWhereUniqueInput!): SupportPage
+  supportPages(where: SupportPageWhereInput, orderBy: SupportPageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SupportPage]!
+
+  notification(id: NotificationWhereUniqueInput!): Notification
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
+  
+  canUpdateOwnOrderStatus: Boolean!
+}
+
+type Mutation {
+
+  login(email: String!, password: String!): AuthPayload!
+  loginWithToken(loginToken: String!): AuthPayload!
+  resetPassword(email: String!): Boolean!
+  changePassword(oldPassword: String!, newPassword: String!): Boolean!
+  changePasswordWithToken(loginToken: String!, password: String!): Boolean!
+
+  createUser(input: UserCreateInput!): User!
+  updateUser(input: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+
+  createBrand(input: BrandCreateInput!, logo: Upload, backgroundImage: Upload): Brand!
+  updateBrand(input: BrandUpdateInput!, where: BrandWhereUniqueInput!, logo: Upload, backgroundImage: Upload): Brand!
+
+  readNotification(where: NotificationWhereUniqueInput): Notification!
+
+  createStore(input: StoreCreateInput!, image: Upload, files: [Upload]): Store!
+  updateStore(input: StoreUpdateInput!, where: StoreWhereUniqueInput!, image: Upload, files: [Upload]): Store!
+  deleteStore(where: StoreWhereUniqueInput!): Store
+  
+  createSupplier(input: SupplierCreateInput!): Supplier!
+  updateSupplier(input: SupplierUpdateInput!, where: SupplierWhereUniqueInput!): Supplier!
+
+  createProduct(input: ProductCreateInput!, images: [Upload]): Product!
+  updateProduct(input: ProductUpdateInput!, where: ProductWhereUniqueInput!, images: [Upload]): Product!
+
+  createProductCategory(input: ProductCategoryCreateInput!, images: [Upload]): ProductCategory!
+  updateProductCategory(input: ProductCategoryUpdateInput!, where: ProductCategoryWhereUniqueInput!, images: [Upload]): ProductCategory!
+
+  createOrderTemplate(input: OrderTemplateCreateInput!, images: [Upload]): OrderTemplate!
+  updateOrderTemplate(input: OrderTemplateUpdateInput!, where: OrderTemplateWhereUniqueInput!, images: [Upload]): OrderTemplate!
+  setOrderTemplateOrder(where: OrderTemplateWhereUniqueInput!, direction: Direction!): [OrderTemplate]!
+  orderTemplateImage(where: OrderTemplateWhereUniqueInput!): File!
+
+  createOrders(orders: [OrderInput]!): [Order!]!
+  updateOrder(input: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order!
+
+  createSupportPage(input: SupportPageCreateInput!): SupportPage!
+  updateSupportPage(input: SupportPageUpdateInput!, where: SupportPageWhereUniqueInput!): SupportPage!
+  deleteSupportPage(where: SupportPageWhereUniqueInput!): SupportPage!
+
+  brandExport(where: BrandWhereUniqueInput!, type: BrandExportType!): File!
+  brandImport(excel: Upload): Boolean!
+  partialImport(domain: String!, excel: Upload): Boolean!
+}
+
+
+enum Direction {
+  up
+  down
+}
+
+enum BrandExportType {
+  default
+  found
+}
+
+type Subscription {
+  notifications(where: NotificationSubscriptionWhereInput): NotificationSubscriptionPayload
+  orderTemplates(where: OrderTemplateSubscriptionWhereInput): OrderTemplateSubscriptionPayload
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+input OrderInput {
+  store: StoreWhereUniqueInput!
+  order: [OrderItemInput]!
+  address: AddressCreateInput! # If delivery address is same as store address --> this becomes a copy of the store address
+  comment: String
+  poNumber: String
+}
+
+input OrderItemInput {
+  amount: Int
+  orderTemplate: OrderTemplateWhereUniqueInput
+  children: [OrderItemInput]
+}

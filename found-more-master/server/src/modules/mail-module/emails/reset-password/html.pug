@@ -1,0 +1,8 @@
+extends ../base.pug
+
+block content
+  h1 Hi #{user.firstName}
+  p You have requested to change your password. You can do this through the link below.
+  p(itemprop='handler' itemscope='' itemtype='http://schema.org/HttpActionHandler')
+    a.btn-primary(href=link itemprop='url') Reset password
+  p Your password won't change until you access the link above and create a new one.

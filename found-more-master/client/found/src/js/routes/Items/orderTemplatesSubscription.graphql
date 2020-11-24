@@ -1,0 +1,13 @@
+subscription OrderTemplates($where: OrderTemplateSubscriptionWhereInput) {
+  orderTemplates(where: $where) {
+    node {
+      id
+      parent {
+        id
+      }
+      children {
+        id
+      }
+    }
+  }
+}

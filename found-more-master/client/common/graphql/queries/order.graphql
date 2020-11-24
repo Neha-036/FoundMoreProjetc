@@ -1,0 +1,7 @@
+#import "../fragments/order.graphql"
+
+query Order($where: OrderWhereUniqueInput!){
+  order(where: $where) {
+    ...OrderFragment
+  }
+}

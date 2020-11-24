@@ -1,0 +1,3 @@
+mutation deleteStoreOrderItem($id: String!) {
+  deleteStoreOrderItem(id: $id) @client
+}

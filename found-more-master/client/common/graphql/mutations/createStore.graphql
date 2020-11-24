@@ -1,0 +1,7 @@
+#import "../fragments/store.graphql"
+
+mutation CreateStore($input: StoreCreateInput! $image: Upload $files: [Upload]) {
+  createStore(input: $input image: $image files: $files) {
+    ...StoreFragment
+  }
+}

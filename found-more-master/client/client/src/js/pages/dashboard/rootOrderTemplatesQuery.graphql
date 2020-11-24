@@ -1,0 +1,21 @@
+#import "../../../../../common/graphql/fragments/orderTemplate.graphql"
+
+query RootOrderTemplates($storeLanguages: [String!]!, $domain: String!) {
+  orderTemplates(
+    where: {
+      AND: [
+        { parent: null }
+        {
+          OR: [
+            { properties: { language: { isoCode_in: $storeLanguages } } }
+            { properties: { language: null } }
+          ]
+        }
+        { brand: { domain: $domain } }
+      ]
+    }
+    last: 3
+  ) {
+    ...OrderTemplateFragment
+  }
+}

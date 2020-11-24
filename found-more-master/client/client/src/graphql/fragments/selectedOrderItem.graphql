@@ -1,0 +1,5 @@
+fragment SelectedOrderItemFragment on SelectedOrderItem {
+  __typename
+  id
+  amount
+}

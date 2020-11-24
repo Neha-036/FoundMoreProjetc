@@ -1,0 +1,24 @@
+{
+  "exclude": [
+    "test",
+    "database",
+    "utils/",
+    "scripts"
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "sourceMap": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "lib": [
+      "es2017.object",
+      "es7",
+      "esnext.asynciterable",
+      "dom"
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+  }
+}

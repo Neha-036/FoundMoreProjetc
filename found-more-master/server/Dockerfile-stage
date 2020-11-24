@@ -1,0 +1,23 @@
+# base image
+FROM node:11.3.0
+
+# set working directory
+WORKDIR /usr/src/app
+
+# install app dependencies
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+COPY package.json /usr/src/app/package.json
+RUN npm install
+RUN npm config set unsafe-perm true
+
+# create build
+COPY . /usr/src/app
+RUN npm run build
+
+# all but the *.ts files to the dist dir
+RUN cd /usr/src/app/src/ && cp --parent -r `find ! -name \*.ts` ../dist/
+
+EXPOSE 4000
+
+# run nginx
+CMD ["node", "./dist"]

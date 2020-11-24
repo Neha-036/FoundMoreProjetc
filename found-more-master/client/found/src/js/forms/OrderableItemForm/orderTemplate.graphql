@@ -1,0 +1,11 @@
+#import "Common/graphql/fragments/orderTemplate.graphql"
+query OrderTemplate($where: OrderTemplateWhereUniqueInput!) {
+  orderTemplate(where: $where) {
+    ...OrderTemplateFragment
+    # Not filtering on deletedAt, because the component tree will nor rerender properly.
+    # Instead, a filter is applied in the mapping over the result data of this query.
+    children {
+      ...OrderTemplateFragment
+    }
+  }
+}

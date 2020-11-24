@@ -1,0 +1,7 @@
+#import "../fragments/productCategory.graphql"
+
+mutation UpdateProductCategory($where: ProductCategoryWhereUniqueInput! $input: ProductCategoryUpdateInput!) {
+  updateProductCategory(where: $where input: $input) {
+    ...ProductCategoryFragment
+  }
+}

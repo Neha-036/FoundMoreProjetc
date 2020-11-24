@@ -1,0 +1,112 @@
+version: '3'
+
+services:
+
+  prisma:
+    image: prismagraphql/prisma:1.20
+    restart: always
+    ports:
+    - 4466:4466
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+        # managementApiSecret: my-secret
+        databases:
+          default:
+            connector: postgres
+            host: postgres
+            port: 5432
+            user: prisma
+            password: prisma
+            migrations: true
+
+  postgres:
+    image: postgres:10.6
+    restart: always
+    ports:
+      - 5555:5432
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+
+  server:
+    container_name: fm-backend-dev
+    build:
+      context: ./server
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 4000:4000
+      - 5000:3000
+    environment:
+      - NODE_ENV=development
+      # - PRISMA_ENDPOINT=http://prism-publi-1su14lv8nyolb-1798417008.eu-west-1.elb.amazonaws.com/found/staging
+      - PRISMA_ENDPOINT=http://prisma:4466/found/dev
+      # - PRISMA_SECRET=ea4f28c69f55a3da5a502768a737ad5b
+      - PRISMA_SECRET=mysecret123
+      - PRISMA_MANAGEMENT_API_SECRET=ea4f28c69f55a3da5a502768a737ad5b
+      - PORT=4000
+      - APP_SECRET=jwtsecret123
+      - DEBUG=false
+      - API_ENDPOINT=http://localhost:4000
+      - API_USER=found@example.org
+      - API_PASSWORD=nooneknows
+      - MAILGUN_KEY=key-3gxzuxpi-m2i650s9oezh1o4657g-2s4
+      - MAILGUN_DOMAIN=mg.found.strangelove.digital
+      - MAILGUN_DEFAULT_FROM=Found More <noreply@mg.found.strangelove.digital>
+      - S3_ACCESS_KEY_ID=AKIAI7QQIYEE56C24L2Q
+      - S3_SECRET_ACCESS_KEY=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
+      - S3_BUCKET=found-more
+    depends_on:
+      - prisma
+      - postgres
+    links:
+      - prisma
+
+  graphviz:
+    environment:
+      - "TZ=Europe/Amsterdam"
+    build:
+      context: ./server
+      dockerfile: Dockerfile-graphviz
+    ports:
+      - 8080:8080
+
+  client-client:
+    container_name: fm-client-client-frontend-dev
+    build:
+      context: ./client
+      dockerfile: Dockerfile-dev-client
+    volumes:
+      - ./client/client:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+      - PRISMA_API_GATEWAY_URL=http://localhost:4000
+      - WEBSOCKET_ENDPOINT=ws://localhost:4000/graphql
+
+  client-found:
+    container_name: fm-client-found-frontend-dev
+    build:
+      context: ./client
+      dockerfile: Dockerfile-dev-found
+    volumes:
+      - ./client/found:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 8000:8000
+    environment:
+      - NODE_ENV=development
+      - PRISMA_API_GATEWAY_URL=http://localhost:4000
+      - WEBSOCKET_ENDPOINT=ws://localhost:4000/graphql
+
+volumes:
+  postgres:

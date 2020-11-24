@@ -1,0 +1,379 @@
+type User {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  email: String! @unique
+  password: String!
+  firstName: String!
+  lastName: String!
+  sendNotificationToEmail: Boolean! @default(value: "true")
+  phoneNumber: String
+
+  role: Role!
+  brand: Brand! @relation(name: "BrandUser")
+  contactPersonToBrand: [Brand!]! @relation(name: "ContactPersonBrand")
+  stores: [Store!]!
+  notifications: [Notification!]!
+  orders: [Order!]!
+}
+
+type Address {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  countryCode: String!
+  country: String
+  city: String!
+  street: String!
+  number: String
+  postalCode: String!
+  addition: String
+  longtitude: Float
+  latitude: Float
+
+  # deliveryOfStore: Store @relation(name: "deliveryAddress")
+  # frontStore: Store @relation(name: "storeAddress")
+}
+
+type Brand {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  domain: String! @unique
+  name: String!
+  primaryColor: String!
+  secondaryColor: String!
+  textColor: String!
+  logo: File @relation(name: "BrandLogo")
+  backgroundImage: File @relation(name: "BrandBackground")
+
+  stores: [Store!]!
+  address: Address
+  productCategories: [ProductCategory!]!
+  orderTemplates: [OrderTemplate!]!
+  contactPerson: User @relation(name: "ContactPersonBrand")
+  users: [User!]! @relation(name: "BrandUser")
+}
+ 
+type File {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  originalName: String
+  contentType: String
+  mimeType: String!
+  bucket: String!
+  key: String!
+  location: String!
+}
+
+type Store {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  name: String!
+  storeNumber: String
+  address: Address @relation(name: "StoreAddress", onDelete: CASCADE)
+  deliveryAddress: Address @relation(name: "DeliveryAddress", onDelete: CASCADE)
+  brand: Brand
+  image: File @relation(name: "StoreImage", onDelete: CASCADE)
+  email: String
+  phone: String
+  website: String
+  contactPerson: String
+  contactEmail: String
+
+  currency: String
+  size: String
+  type: String
+  language: Language
+
+  orders: [Order!]! @relation(name: "StoreOrders", onDelete: CASCADE)
+  files: [File!]! @relation(name: "StoreFiles", onDelete: CASCADE)
+  users: [User!]!
+}
+
+type Role {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  name: String! @unique
+  description: String
+
+  permissions: [RolePermission!]!
+  users: [User!]!
+}
+
+type RolePermission {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  action: PermissionAction!
+  model: PermissionModel!
+}
+
+type ProductCategory {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  properties: Properties!
+
+  brand: Brand
+  parent: ProductCategory @relation (name: "SubProductCategories")
+  children: [ProductCategory!]! @relation(name:"SubProductCategories")
+  products: [Product!]!
+}
+
+type Product {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  stock: Int
+
+  brand: Brand # Note: Anouk and Patrick aren't sure yet that this is supposed to be here
+  properties: Properties!
+  productCategories: ProductCategory
+}
+
+type OrderTemplate {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  sortIndex: Int
+  defaultOrderAmount: Int
+  minOrderAmount: Int
+  maxOrderAmount: Int
+  orderable: Boolean
+  stock: Int
+  stockWarning: Int
+
+  visibleFrom: DateTime @default(value: "2019-01-01T00:00:00.000Z")
+  visibleUntil: DateTime
+
+  properties: Properties
+  filterOptions: FilterOptions
+  brand: Brand!
+
+  # An order template either has subgroups or a project, not both
+  parent: OrderTemplate @relation (name: "SubOrderGroups")
+  children: [OrderTemplate!]! @relation (name: "SubOrderGroups", onDelete: CASCADE)
+  product: Product 
+}
+
+type FilterOptions {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  type: FilterOptionsType
+  language: Language
+  storeType: String
+  size: String
+  currency: String
+}
+
+type Properties {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  articleNumber: String
+  price: Int
+  currency: String
+
+  name: String
+  description: String
+  weightG: Int
+  widthMm: Int
+  heightMm: Int
+  depthMm: Int
+  color: String
+  material: String
+  size: String
+  language: Language
+  images: [File!]!
+
+  supplier: Supplier
+
+  product: Product 
+  productCategory: ProductCategory
+  orderTemplate: OrderTemplate
+}
+
+type Order {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  orderNumber: String
+  poNumber: String
+  store: Store! @relation(name: "StoreOrders")
+  trackAndTraceCode: String
+  status: OrderStatus!
+  comments: [Comment!]! @relation(name: "OrderComments", onDelete: CASCADE)
+  createdBy: User
+  orderedAt: DateTime
+
+  items: [OrderItem!]! @relation(name: "OrderItems", onDelete: CASCADE)
+  address: Address  @relation(name: "OrderAddress", onDelete: CASCADE) # If order needs to be send to another address then the store has
+}
+
+type OrderItem {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  name: String
+  amount: Int
+  price: Int
+  currency: String
+
+  orderTemplate: OrderTemplate
+  items: [OrderItem!]! @relation(name: "OrderItemItems",onDelete: CASCADE)
+  product: Product
+}
+
+type Comment {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  content: String
+    
+  user: User!
+  order: Order! @relation(name: "OrderComments")
+}
+
+type Supplier {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  name: String!
+
+  products: [Properties!]!
+  address: Address!
+}
+
+type Language {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  isoCode: String! @unique # nl, -, fr-nl
+  articleCode: String! @unique # 12, 00, 23
+  name: String! # Dutch, Not relevant, French Dutch
+}
+
+type SupportPage {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  title: String!
+  content: String!
+}
+
+type Notification {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  note: String
+
+  title: String!
+  content: String!
+  readAt: DateTime
+  link: String
+  user: User!
+}
+
+enum PermissionAction {
+  CREATE_OWN
+  CREATE_ALL
+  UPDATE_OWN
+  UPDATE_ALL
+  DELETE_OWN
+  DELETE_ALL
+  VIEW_OWN
+  VIEW_ALL
+  ALL
+}
+
+enum FilterOptionsType {
+  ALL
+  ZERO_OR_ONE
+  ONE
+  ZERO_OR_MORE
+  ONE_OR_MORE
+}
+
+enum PermissionModel {
+  USER
+  PRODUCT
+  ORDER
+  ORDER_STATUS
+  BRAND
+  ROLE
+  STORE
+  SUPPLIER
+  SUPPORT
+  NOTIFICATION
+  ALL
+}
+
+enum OrderStatus {
+  WAITING_FOR_APPROVAL
+  PENDING
+  RECEIVED
+  DISPATCHED
+  DELIVERED
+  INSTALLED
+  CANCELLED
+}

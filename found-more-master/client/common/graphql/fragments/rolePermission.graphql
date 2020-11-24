@@ -1,0 +1,9 @@
+fragment RolePermissionFragment on RolePermission {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  action
+  model
+}

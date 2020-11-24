@@ -1,0 +1,10 @@
+#import "../fragments/orderTemplate.graphql"
+
+mutation CreateOrderTemplate(
+  $input: OrderTemplateCreateInput!
+  $images: [Upload]
+) {
+  createOrderTemplate(input: $input, images: $images) {
+    ...OrderTemplateFragment
+  }
+}

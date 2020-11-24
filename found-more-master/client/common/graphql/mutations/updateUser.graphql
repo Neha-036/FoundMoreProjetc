@@ -1,0 +1,7 @@
+#import "../fragments/user.graphql"
+
+mutation UpdateUser($where: UserWhereUniqueInput! $input: UserUpdateInput!) {
+  updateUser(where: $where input: $input) {
+    ...UserFragment
+  }
+}

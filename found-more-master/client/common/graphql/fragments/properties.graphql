@@ -1,0 +1,32 @@
+#import "./language.graphql"
+#import "./file.graphql"
+#import "./supplier.graphql"
+
+fragment PropertiesFragment on Properties {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  articleNumber
+  price
+  currency
+  name
+  description
+  weightG
+  widthMm
+  heightMm
+  depthMm
+  color
+  material
+  size
+  language {
+    ...LanguageFragment
+  }
+  images {
+    ...FileFragment
+  }
+  supplier {
+    ...SupplierFragment
+  }
+}

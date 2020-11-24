@@ -1,0 +1,3 @@
+mutation updateStoreOrderItem($storeId: String, $orderId: String $amount: String $comment: String $deliveryAddress: Object $poNumber: String) {
+  updateStoreOrderItem(storeId: $storeId orderId: $orderId amount: $amount comment: $comment deliveryAddress: $deliveryAddress poNumber: $poNumber) @client
+}

@@ -1,0 +1,9 @@
+extends ../base.pug
+
+block content
+  h1 Hi #{user.firstName}
+  p You have a new notification from Found More:
+  h2 #{notification.title}
+  p #{notification.content}
+  p(itemprop='handler' itemscope='' itemtype='http://schema.org/HttpActionHandler')
+    a.btn-primary(href=notification.link itemprop='url') View online

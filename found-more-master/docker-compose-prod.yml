@@ -1,0 +1,84 @@
+version: '3'
+
+services:
+
+  prisma:
+    image: prismagraphql/prisma:1.20
+    restart: always
+    ports:
+    - 4466:4466
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+        # managementApiSecret: my-secret
+        databases:
+          default:
+            connector: postgres
+            host: postgres
+            port: 5432
+            user: prisma
+            password: prisma
+            migrations: true
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+
+  server:
+    container_name: fm-backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile-prod
+    ports:
+      - 4000:4000
+    environment:
+      - NODE_ENV=production
+      - PRISMA_ENDPOINT=http://prisma:4466/found/prod
+      - PRISMA_SECRET=mysecret123
+      - PRISMA_MANAGEMENT_API_SECRET=ea4f28c69f55a3da5a502768a737ad5b
+      - PORT=4000
+      - APP_SECRET=jwtsecret123
+      - DEBUG=false
+      - API_ENDPOINT=http://localhost:4000
+      - API_USER=found@example.org
+      - API_PASSWORD=nooneknows
+      - MAILGUN_KEY=key-3gxzuxpi-m2i650s9oezh1o4657g-2s4
+      - MAILGUN_DOMAIN=mg.found.strangelove.digital
+      - MAILGUN_DEFAULT_FROM=Found More <noreply@mg.found.strangelove.digital>
+      - S3_ACCESS_KEY_ID=AKIAI7QQIYEE56C24L2Q
+      - S3_SECRET_ACCESS_KEY=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
+      - S3_BUCKET=found-more
+    depends_on:
+      - prisma
+      - postgres
+    links:
+      - prisma
+
+  client:
+    container_name: fm-frontend
+    build:
+      context: ./client
+      dockerfile: Dockerfile-prod
+      args:
+        - NODE_ENV=production
+        - PRISMA_API_GATEWAY_URL=${PRISMA_API_GATEWAY_URL}
+        - WEBSOCKET_ENDPOINT=${WEBSOCKET_ENDPOINT}
+    expose:
+      - 80
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile-prod
+    ports:
+      - 80:80
+    links:
+      - server
+      - client

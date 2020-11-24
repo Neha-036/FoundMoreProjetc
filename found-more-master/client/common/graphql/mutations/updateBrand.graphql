@@ -1,0 +1,7 @@
+#import "../fragments/brand.graphql"
+
+mutation UpdateBrand($where: BrandWhereUniqueInput! $input: BrandUpdateInput! $backgroundImage: Upload $logo: Upload) {
+  updateBrand(where: $where input: $input backgroundImage: $backgroundImage logo: $logo) {
+    ...BrandFragment
+  }
+}

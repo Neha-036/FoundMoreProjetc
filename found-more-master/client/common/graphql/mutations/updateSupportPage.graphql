@@ -1,0 +1,7 @@
+#import "../fragments/supportPage.graphql"
+
+mutation UpdateSupportPage($where: SupportPageWhereUniqueInput! $input: SupportPageUpdateInput!) {
+  updateSupportPage(where: $where input: $input) {
+    ...SupportPageFragment
+  }
+}

@@ -1,0 +1,6 @@
+
+mutation SetOrderTemplateOrder($where: OrderTemplateWhereUniqueInput! $direction: Direction!) {
+  setOrderTemplateOrder(where: $where direction: $direction) {
+    id
+  }
+}

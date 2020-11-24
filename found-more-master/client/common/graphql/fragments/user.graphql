@@ -1,0 +1,24 @@
+#import "./role.graphql"
+
+fragment UserFragment on User {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  email
+  firstName
+  lastName
+  sendNotificationToEmail
+  phoneNumber
+  role {
+    ...RoleFragment
+  }
+  stores {
+    id
+  }
+  brand {
+    id
+    name
+    domain
+  }
+}

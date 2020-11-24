@@ -1,0 +1,7 @@
+#import "../fragments/selectedOrderItem.graphql"
+
+mutation addSelectedOrderItem($id: String! $amount: Int!) {
+  addSelectedOrderItem(id: $id, amount: $amount) @client {
+    ...SelectedOrderItemFragment
+  }
+}

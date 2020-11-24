@@ -1,0 +1,7 @@
+#import "../fragments/orderTemplate.graphql"
+
+query OrderTemplate($where: OrderTemplateWhereUniqueInput!){
+  orderTemplate(where: $where) {
+    ...OrderTemplateFragment
+  }
+}

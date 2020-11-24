@@ -1,0 +1,10 @@
+extends ../base.pug
+
+block content
+  h1 Hi #{user.firstName}
+  p Welcome! We have created an user account for you.
+  p This is your password: #{password}
+  p To login, please visit You Found More.
+  p(itemprop='handler' itemscope='' itemtype='http://schema.org/HttpActionHandler')
+    a.btn-primary(href=getClientDashboardLink(user.brand.domain) itemprop='url') You Found More
+  

@@ -1,0 +1,11 @@
+#import "../fragments/orderTemplate.graphql"
+
+mutation UpdateOrderTemplate(
+  $where: OrderTemplateWhereUniqueInput!
+  $input: OrderTemplateUpdateInput!
+  $images: [Upload]
+) {
+  updateOrderTemplate(where: $where, input: $input, images: $images) {
+    ...OrderTemplateFragment
+  }
+}

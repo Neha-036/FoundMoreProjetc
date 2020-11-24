@@ -1,0 +1,12 @@
+#import "./orderItem.graphql"
+#import "./store.graphql"
+
+fragment StoreOrderItemFragment on StoreOrderItem {
+  __typename
+  store {
+    ...StoreFragment
+  }
+  orderItems {
+    ...OrderItemFragment
+  }
+}

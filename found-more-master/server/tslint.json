@@ -1,0 +1,34 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "max-classes-per-file": false,
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
+    "no-console": false,
+    "member-access": false,
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "no-implicit-dependencies": [
+      true,
+      "dev"
+    ],
+    "object-literal-sort-keys": false,
+    "ordered-imports": true,
+    "interface-name": false,
+    "no-trailing-whitespace": true,
+    "max-line-length": false,
+    "forin": false
+  },
+  "rulesDirectory": [],
+  "linterOptions": {
+    "exclude": ["src/generated/prisma.ts", "utils/binding/generated.ts"]
+  }
+}

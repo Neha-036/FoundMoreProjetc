@@ -1,0 +1,7 @@
+#import "../fragments/order.graphql"
+
+mutation Order($where: OrderWhereUniqueInput! $input: OrderUpdateInput!) {
+  updateOrder(where: $where input: $input) {
+    ...OrderFragment
+  }
+}

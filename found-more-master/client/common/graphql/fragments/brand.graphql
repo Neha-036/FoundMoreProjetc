@@ -1,0 +1,43 @@
+#import "./file.graphql"
+#import "./address.graphql"
+
+fragment BrandFragment on Brand {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  name
+  domain
+  primaryColor
+  secondaryColor
+  textColor
+  users {
+    id
+  }
+  usersConnection {
+    aggregate {
+      count
+    }
+  }
+  storesConnection {
+    aggregate {
+      count
+    }
+  }
+  contactPerson {
+    id
+  }
+  stores {
+    id
+  }
+  logo {
+    ...FileFragment
+  }
+  backgroundImage {
+    ...FileFragment
+  }
+  address {
+    ...AddressFragment
+  }
+}

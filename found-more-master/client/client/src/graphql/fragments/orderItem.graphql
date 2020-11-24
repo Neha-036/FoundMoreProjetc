@@ -1,0 +1,23 @@
+fragment OrderItemFragment on OrderItem {
+  __typename
+  id
+  orderTemplateId
+  amount
+  properties {
+    id
+    name
+  }
+  filterOptions {
+    id
+    language {
+      id
+      isoCode
+    }
+  }
+  children {
+    id
+    children {
+      id
+    }
+  }
+}

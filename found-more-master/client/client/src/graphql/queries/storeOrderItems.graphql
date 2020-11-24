@@ -1,0 +1,7 @@
+#import "../fragments/storeOrderItem.graphql"
+
+query StoreOrderItemsQuery {
+  storeOrderItems @client {
+    ...StoreOrderItemFragment
+  }
+}

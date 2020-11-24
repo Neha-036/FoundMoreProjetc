@@ -1,0 +1,37 @@
+fragment PropertiesParts on Properties {
+  id
+  name
+  articleNumber
+  widthMm
+  heightMm
+  depthMm
+}
+
+fragment ProductParts on Product {
+  id
+  stock
+  deletedAt
+  properties {
+    ...PropertiesParts
+  }
+}
+
+fragment ProductCategoryParts on ProductCategory {
+  id
+  deletedAt
+  properties {
+    ...PropertiesParts
+  }
+  products {
+    ...ProductParts
+  }
+}
+
+query RootProductCategories($brandId: ID!) {
+  productCategories(where: { brand: { id: $brandId }, parent: null }) {
+    ...ProductCategoryParts
+    children {
+      ...ProductCategoryParts
+    }
+  }
+}

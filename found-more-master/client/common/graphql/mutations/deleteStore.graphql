@@ -1,0 +1,7 @@
+#import "../fragments/store.graphql"
+
+mutation DeleteStore($where: StoreWhereUniqueInput!) {
+  deleteStore(where: $where) {
+    ...StoreFragment
+  }
+}

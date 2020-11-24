@@ -1,0 +1,7 @@
+#import "../fragments/supportPage.graphql"
+
+query SupportPage($where: SupportPageWhereUniqueInput!){
+  supportPage(where: $where) {
+    ...SupportPageFragment
+  }
+}

@@ -1,0 +1,40 @@
+#import "./properties.graphql"
+#import "./product.graphql"
+#import "./filterOptions.graphql"
+
+fragment OrderTemplateFragment on OrderTemplate {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  defaultOrderAmount
+  minOrderAmount
+  maxOrderAmount
+  stock
+  sortIndex
+  stockWarning
+  visibleFrom
+  visibleUntil
+  orderable
+  parent {
+    id
+    brand {
+      id
+    }
+  }
+  brand {
+    id
+    domain
+    name
+  }
+  properties {
+    ...PropertiesFragment
+  }
+  product {
+    ...ProductFragment
+  }
+  filterOptions {
+    ...FilterOptionsFragment
+  }
+}

@@ -1,0 +1,7 @@
+#import "../fragments/variation.graphql"
+
+query Variation($id: String!) {
+  variation(id: $id) @client {
+    ...VariationFragment
+  }
+}

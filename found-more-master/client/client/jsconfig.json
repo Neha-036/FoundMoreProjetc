@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/js/*"],
+      "@/graphql/*": ["./src/graphql/*"],
+      "Common/*": ["../common/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

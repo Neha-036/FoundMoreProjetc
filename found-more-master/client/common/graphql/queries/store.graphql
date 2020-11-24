@@ -1,0 +1,7 @@
+#import "../fragments/store.graphql"
+
+query Store($where: StoreWhereUniqueInput!){
+  store(where: $where) {
+    ...StoreFragment
+  }
+}

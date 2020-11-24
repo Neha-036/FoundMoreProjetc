@@ -1,0 +1,22 @@
+#import "./properties.graphql"
+
+fragment ProductCategoryFragment on ProductCategory {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  parent {
+    id
+  }
+  brand {
+    id
+    name
+  }
+  children {
+    id
+  }
+  properties {
+    ...PropertiesFragment
+  }
+}

@@ -1,0 +1,46 @@
+#import "./address.graphql"
+#import "./file.graphql"
+#import "./language.graphql"
+
+fragment StoreFragment on Store {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  name
+  storeNumber
+  email
+  phone
+  website
+  contactPerson
+  contactEmail
+  currency
+  size
+  type
+  brand {
+    id
+    domain
+    name
+  }
+  users {
+    id
+    firstName
+    lastName
+  }
+  language {
+    ...LanguageFragment
+  }
+  address {
+    ...AddressFragment
+  }
+  deliveryAddress {
+    ...AddressFragment
+  }
+  image {
+    ...FileFragment
+  }
+  files {
+    ...FileFragment
+  }
+}

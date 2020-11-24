@@ -1,0 +1,15 @@
+#import "./address.graphql"
+
+fragment StoreFragment on Store {
+  __typename
+  id
+  name
+  comment
+  poNumber
+  address {
+    ...AddressFragment
+  }
+  deliveryAddress {
+    ...AddressFragment
+  }
+}

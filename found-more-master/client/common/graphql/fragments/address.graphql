@@ -1,0 +1,16 @@
+fragment AddressFragment on Address {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  countryCode
+  country
+  city
+  street
+  number
+  postalCode
+  addition
+  longtitude
+  latitude
+}

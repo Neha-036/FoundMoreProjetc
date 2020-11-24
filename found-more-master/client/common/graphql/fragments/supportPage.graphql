@@ -1,0 +1,9 @@
+fragment SupportPageFragment on SupportPage {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  title
+  content
+}

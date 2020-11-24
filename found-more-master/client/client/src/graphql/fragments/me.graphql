@@ -1,0 +1,11 @@
+#import "./brand.graphql"
+
+fragment MeFragment on User {
+  __typename
+  id
+  # permissions {
+  #   model
+  #   action
+  # }
+  storeLanguages
+}

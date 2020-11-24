@@ -1,0 +1,7 @@
+#import "../fragments/supportPage.graphql"
+
+query SupportPages($where: SupportPageWhereInput $orderBy: SupportPageOrderByInput $skip: Int $after: String $before: String $first: Int $last: Int){
+  supportPages(where: $where orderBy: $orderBy skip: $skip after: $after before: $before first: $first last: $last) {
+    ...SupportPageFragment
+  }
+}

@@ -1,0 +1,7 @@
+#import "../fragments/store.graphql"
+
+query Store($id: String!) {
+  store(id: $id) @client {
+    ...StoreFragment
+  }
+}

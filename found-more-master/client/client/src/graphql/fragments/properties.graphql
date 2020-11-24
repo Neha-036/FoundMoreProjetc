@@ -1,0 +1,6 @@
+fragment PropertiesFragment on Properties {
+  __typename
+  id
+  name
+  articleNumber
+}

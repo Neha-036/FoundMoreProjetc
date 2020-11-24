@@ -1,0 +1,14 @@
+#import "./rolePermission.graphql"
+
+fragment RoleFragment on Role {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  name
+  description
+  permissions {
+    ...RolePermissionFragment
+  }
+}

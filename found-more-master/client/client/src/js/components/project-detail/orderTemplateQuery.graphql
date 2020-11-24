@@ -1,0 +1,13 @@
+#import "../../../../../common/graphql/fragments/orderTemplate.graphql"
+
+query OrderTemplateQuery($id: ID!) {
+  orderTemplate(where: { id: $id }) {
+    ...OrderTemplateFragment
+    children {
+      ...OrderTemplateFragment
+      children {
+        ...OrderTemplateFragment
+      }
+    }
+  }
+}

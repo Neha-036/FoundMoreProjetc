@@ -1,0 +1,10 @@
+#import "./rolePermission.graphql"
+
+fragment RoleFragment on Role {
+  __typename
+  id
+  name
+  permissions {
+    ...RolePermissionFragment
+  }
+}

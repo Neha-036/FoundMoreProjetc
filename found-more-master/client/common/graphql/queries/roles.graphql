@@ -1,0 +1,7 @@
+#import "../fragments/role.graphql"
+
+query Roles($where: RoleWhereInput $orderBy: RoleOrderByInput $skip: Int $after: String $before: String $first: Int $last: Int){
+  roles(where: $where orderBy: $orderBy skip: $skip after: $after before: $before first: $first last: $last) {
+    ...RoleFragment
+  }
+}

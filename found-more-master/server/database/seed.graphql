@@ -1,0 +1,106 @@
+mutation {  
+  
+  adminUser: createUser(
+    data: {
+      email: "found@example.org"
+      password: "$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm" # plaintext password: "nooneknows"
+      firstName: "John"
+      lastName: "Doe"
+      brand: { 
+        create: { 
+          domain: "found"
+          name: "Found"
+          primaryColor: "red"
+          secondaryColor: "white"
+          textColor: "black"
+        }
+      }
+      role: {
+        create: {
+          name: "admin"
+          permissions: { 
+            create: {
+              action: ALL,
+              model: ALL
+            }
+          }
+          description: "You can do everything"
+        }
+      }
+    }
+  ) {
+    id
+  }
+
+  storeOwnerRole: createRole(
+    data: {
+      name: "store-owner"
+      permissions: { 
+        create: [
+          { action: VIEW_OWN,   model: ALL },
+          { action: CREATE_OWN, model: ORDER },
+          { action: UPDATE_OWN, model: USER },
+          { action: UPDATE_OWN, model: NOTIFICATION },
+          { action: UPDATE_OWN, model: ORDER },
+        ]
+      }
+      description: "The store owner role"
+    }
+  ) {
+    id
+  }
+
+  managerRole: createRole(
+    data: {
+      name: "manager"
+      permissions: { 
+        create: [
+          { action: VIEW_OWN,   model: ALL },
+          { action: CREATE_OWN, model: ORDER },
+          { action: UPDATE_OWN, model: USER },
+          { action: UPDATE_OWN, model: NOTIFICATION },
+          { action: UPDATE_OWN, model: ORDER },
+          { action: UPDATE_OWN, model: ORDER_STATUS },
+        ]
+      }
+      description: "The manager role"
+    }
+  ) {
+    id
+  }
+  
+  unprivilegedRole: createRole(
+    data: {
+      name: "unprivileged-user"
+      description: "This user can't do anything"
+    }
+  ) {
+    id
+  }
+  
+  notRelevent: createLanguage(data: { isoCode: "-"  articleCode: "00" name: "Not Relevent" }) { id }
+  catalan:     createLanguage(data: { isoCode: "CA" articleCode: "02" name: "Catalan"      }) { id }
+  english:     createLanguage(data: { isoCode: "EN" articleCode: "01" name: "English"      }) { id }
+  czech:       createLanguage(data: { isoCode: "CZ" articleCode: "03" name: "Czech"        }) { id }
+  danish:      createLanguage(data: { isoCode: "DA" articleCode: "04" name: "Danish"       }) { id }
+  german:      createLanguage(data: { isoCode: "DE" articleCode: "05" name: "German"       }) { id }
+  greek:       createLanguage(data: { isoCode: "EL" articleCode: "06" name: "Greek"        }) { id }
+  spanish:     createLanguage(data: { isoCode: "ES" articleCode: "07" name: "Spanish"      }) { id }
+  french:      createLanguage(data: { isoCode: "FR" articleCode: "08" name: "French"       }) { id }
+  hebrew:      createLanguage(data: { isoCode: "HE" articleCode: "09" name: "Hebrew"       }) { id }
+  hungarian:   createLanguage(data: { isoCode: "HU" articleCode: "10" name: "Hungarian"    }) { id }
+  italian:     createLanguage(data: { isoCode: "IT" articleCode: "11" name: "Italian"      }) { id }
+  dutch:       createLanguage(data: { isoCode: "NL" articleCode: "12" name: "Dutch"        }) { id }
+  norwegian:   createLanguage(data: { isoCode: "NO" articleCode: "13" name: "Norwegian"    }) { id }
+  polish:      createLanguage(data: { isoCode: "PL" articleCode: "14" name: "Polish"       }) { id }
+  portuguese:  createLanguage(data: { isoCode: "PT" articleCode: "15" name: "Portuguese"   }) { id }
+  russian:     createLanguage(data: { isoCode: "RU" articleCode: "16" name: "Russian"      }) { id }
+  slovak:      createLanguage(data: { isoCode: "SK" articleCode: "17" name: "Slovak"       }) { id }
+  swedish:     createLanguage(data: { isoCode: "SV" articleCode: "18" name: "Swedish"      }) { id }
+  turkish:     createLanguage(data: { isoCode: "TR" articleCode: "19" name: "Turkish"      }) { id }
+  croatian:    createLanguage(data: { isoCode: "HR" articleCode: "20" name: "Croatian"     }) { id }
+  slovene:     createLanguage(data: { isoCode: "SL" articleCode: "21" name: "Slovene"      }) { id }
+  finnish:     createLanguage(data: { isoCode: "FI" articleCode: "22" name: "Finnish"      }) { id }
+  shoeSizeUK:  createLanguage(data: { isoCode: "UK_EN" articleCode: "23" name: "Shoe size UK" }) { id }
+  frenchDutch: createLanguage(data: { isoCode: "FR_NL" articleCode: "24" name: "French Dutch" }) { id }
+}

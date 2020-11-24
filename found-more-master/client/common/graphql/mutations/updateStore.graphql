@@ -1,0 +1,7 @@
+#import "../fragments/store.graphql"
+
+mutation UpdateStore($where: StoreWhereUniqueInput! $input: StoreUpdateInput! $image: Upload $files: [Upload]) {
+  updateStore(where: $where input: $input image: $image files: $files) {
+    ...StoreFragment
+  }
+}

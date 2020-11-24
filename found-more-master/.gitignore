@@ -1,0 +1,6 @@
+.DS_Store
+credentials
+
+
+*.xlsx#
+client/.vscode/launch.json

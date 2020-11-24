@@ -1,0 +1,16 @@
+#import "./orderTemplate.graphql"
+
+fragment OrderItemFragment on OrderItem {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  name
+  amount
+  price
+  currency
+  orderTemplate {
+    ...OrderTemplateFragment
+  }
+}

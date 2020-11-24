@@ -1,0 +1,7 @@
+#import "../fragments/brand.graphql"
+
+mutation CreateBrand($input: BrandCreateInput! $backgroundImage: Upload $logo: Upload) {
+  createBrand(input: $input backgroundImage: $backgroundImage logo: $logo) {
+    ...BrandFragment
+  }
+}

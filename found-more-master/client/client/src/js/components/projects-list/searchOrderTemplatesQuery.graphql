@@ -1,0 +1,43 @@
+#import "../../../../../common/graphql/fragments/orderTemplate.graphql"
+
+query SearchOrderTemplates(
+  $storeLanguages: [String!]!
+  $search: String
+  $domain: String!
+  $from: DateTime!
+  $until: DateTime!
+) {
+  orderTemplates(search: $search, where: { orderable: true }) {
+    ...OrderTemplateFragment
+    children(
+      where: {
+        AND: [
+          {
+            OR: [
+              { properties: { language: { isoCode_in: $storeLanguages } } }
+              { properties: { language: null } }
+            ]
+          }
+          {
+            OR: [
+              { visibleFrom_lte: $from }
+              { visibleFrom: null }
+            ]
+          }
+          {
+            OR: [
+              { visibleUntil_gte: $until }
+              { visibleUntil: null }
+            ]
+          }
+          { brand: { domain: $domain } }
+        ]
+      }
+    ) {
+      ...OrderTemplateFragment
+      children {
+        ...OrderTemplateFragment
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+#import "../fragments/product.graphql"
+
+mutation CreateProduct(
+  $input: ProductCreateInput!
+  $images: [Upload]
+) {
+  createProduct(input: $input, images: $images) {
+    ...ProductFragment
+  }
+}

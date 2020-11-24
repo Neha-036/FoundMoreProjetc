@@ -1,0 +1,24 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [{
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Client Side",
+      "url": "http://ring.localhost:3000",
+      "webRoot": "${workspaceFolder}/client/src",
+      "breakOnLoad": true,
+      "sourceMaps": true
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Found Side",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceRoot}/found/src",
+      "sourceMaps": true
+    },
+  ]
+}

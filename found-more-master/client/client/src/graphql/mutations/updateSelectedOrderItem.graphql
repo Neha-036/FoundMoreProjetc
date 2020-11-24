@@ -1,0 +1,3 @@
+mutation updateSelectedOrderItem($id: String!, $amount: Int!, $properties: Object!) {
+  updateSelectedOrderItem(id: $id, amount: $amount, properties: $properties) @client
+}

@@ -1,0 +1,7 @@
+#import "../fragments/supportPage.graphql"
+
+mutation DeleteSupportPage($where: SupportPageWhereUniqueInput!) {
+  deleteSupportPage(where: $where) {
+    ...SupportPageFragment
+  }
+}

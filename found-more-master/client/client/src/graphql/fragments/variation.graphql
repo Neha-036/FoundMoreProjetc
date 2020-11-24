@@ -1,0 +1,14 @@
+#import "../../../../common/graphql/fragments/orderTemplate.graphql"
+#import "./filterOption.graphql"
+
+fragment VariationFragment on Variation {
+  __typename
+  id
+  options {
+    ...OrderTemplateFragment
+  }
+  selectedOptions {
+    id
+    name
+  }
+}

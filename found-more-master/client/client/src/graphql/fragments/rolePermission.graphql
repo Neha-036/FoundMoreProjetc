@@ -1,0 +1,6 @@
+fragment RolePermissionFragment on RolePermission {
+  __typename
+  id
+  action
+  model
+}

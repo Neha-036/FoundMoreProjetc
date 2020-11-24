@@ -1,0 +1,12 @@
+fragment CommentFragment on Comment {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  content
+  user {
+    id
+    firstName
+  }
+}

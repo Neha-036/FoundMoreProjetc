@@ -1,0 +1,13 @@
+fragment FileFragment on File {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  originalName
+  contentType
+  mimeType
+  bucket
+  key
+  location
+}

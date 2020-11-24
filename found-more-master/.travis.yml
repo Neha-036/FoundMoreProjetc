@@ -1,0 +1,27 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.23.1
+  COMMIT: ${TRAVIS_COMMIT::8}
+  MAIN_REPO: https://github.com/strangelove/found-more.git
+  SERVER: found-more-server
+  SERVER_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:server
+  CLIENT: found-more-client
+  CLIENT_REPO: ${MAIN_REPO}#${TRAVIS_BRANCH}:client
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+before_script: 
+  - sudo /etc/init.d/postgresql stop
+
+script:
+  - bash ./docker-push.sh
+  - bash ./docker-deploy-staging.sh
+  - bash ./docker-deploy-production.sh

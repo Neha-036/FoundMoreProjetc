@@ -1,0 +1,23 @@
+#import "../../../../../common/graphql/fragments/orderTemplate.graphql"
+
+query OrderTemplate($where: OrderTemplateWhereUniqueInput!) {
+  orderTemplate(where: $where) {
+    ...OrderTemplateFragment
+    children {
+      id
+      defaultOrderAmount
+      properties {
+        id
+        name
+      }
+      filterOptions {
+        id
+        type
+        language {
+          id
+          isoCode
+        }
+      }
+    }
+  }
+}

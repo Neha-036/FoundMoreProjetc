@@ -1,0 +1,11 @@
+#import "../fragments/product.graphql"
+
+mutation UpdateProduct(
+  $where: ProductWhereUniqueInput!
+  $input: ProductUpdateInput!
+  $images: [Upload]
+) {
+  updateProduct(where: $where, input: $input, images: $images) {
+    ...ProductFragment
+  }
+}

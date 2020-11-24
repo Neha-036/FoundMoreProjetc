@@ -1,0 +1,6 @@
+fragment BrandFragment on Brand {
+  __typename
+  id
+  name
+  domain
+}

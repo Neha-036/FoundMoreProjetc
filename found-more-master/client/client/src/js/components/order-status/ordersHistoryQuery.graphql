@@ -1,0 +1,16 @@
+#import "../../../../../common/graphql/fragments/order.graphql"
+
+query OrdersQuery($search: String!, $updatedAt_lte: DateTime!) {
+  orders(
+    orderBy: createdAt_DESC
+    where: {
+      AND: [
+        { OR: [{ status: DELIVERED }, { status: INSTALLED }] }
+        { updatedAt_lte: $updatedAt_lte }
+      ]
+    }
+    search: $search
+  ) {
+    ...OrderFragment
+  }
+}

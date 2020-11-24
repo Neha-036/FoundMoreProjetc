@@ -1,0 +1,3 @@
+mutation addOrderToStores($stores: Array!) {
+  addOrderToStores(stores: $stores) @client
+}

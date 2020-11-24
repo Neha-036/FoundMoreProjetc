@@ -1,0 +1,13 @@
+#import "../../../../../common/graphql/fragments/order.graphql"
+
+query OpenOrdersQuery($domain: String!) {
+  orders(
+    first: 3
+    orderBy: createdAt_DESC
+    where: {
+      store: { brand: { domain: $domain } }
+    }
+  ) {
+    ...OrderFragment
+  }
+}

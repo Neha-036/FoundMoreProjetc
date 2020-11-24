@@ -1,0 +1,7 @@
+#import "../fragments/product.graphql"
+
+query Product($where: ProductWhereUniqueInput!) {
+  product(where: $where) {
+    ...ProductFragment
+  }
+}

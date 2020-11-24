@@ -1,0 +1,22 @@
+# base image
+FROM node:10.9.0
+
+# install common dir
+ADD ./common /usr/src/common
+WORKDIR /usr/src/common
+
+RUN npm install --silent
+
+# set working directory
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
+
+# add `/usr/src/app/node_modules/.bin` to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY ./client/package.json /usr/src/app/package.json
+RUN npm install --silent
+
+# start app
+CMD ["npm", "run", "dev"]

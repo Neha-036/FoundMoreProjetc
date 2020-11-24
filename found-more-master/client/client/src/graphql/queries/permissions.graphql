@@ -1,0 +1,8 @@
+query Permissions {
+  me @client {
+    permissions {
+      model
+      action
+    }
+  }
+}

@@ -1,0 +1,7 @@
+#import "../fragments/variation.graphql"
+
+mutation UpdateVariation($id: String! $selectedOptions: Array!) {
+  updateVariation(id: $id selectedOptions: $selectedOptions) @client {
+    ...VariationFragment
+  }
+}

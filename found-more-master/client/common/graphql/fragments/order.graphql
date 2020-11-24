@@ -1,0 +1,36 @@
+#import "./comment.graphql"
+#import "./orderItem.graphql"
+#import "./address.graphql"
+#import "./user.graphql"
+
+fragment OrderFragment on Order {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  orderedAt
+  note
+  orderNumber
+  poNumber
+  createdBy {
+    ...UserFragment
+  }
+  address { 
+    ...AddressFragment
+  }
+  store {
+    id
+    name
+    address {
+      ...AddressFragment
+    }
+  }
+  trackAndTraceCode
+  status
+  comments {
+    ...CommentFragment
+  }
+  items {
+    ...OrderItemFragment
+  }
+}

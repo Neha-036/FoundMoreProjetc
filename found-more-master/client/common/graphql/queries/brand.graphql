@@ -1,0 +1,7 @@
+#import "../fragments/brand.graphql"
+
+query Brand($where: BrandWhereUniqueInput!){
+  brand(where: $where) {
+    ...BrandFragment
+  }
+}

@@ -1,0 +1,13 @@
+#import "./address.graphql"
+
+fragment SupplierFragment on Supplier {
+  id
+  createdAt
+  updatedAt
+  deletedAt
+  note
+  name
+  address {
+    ...AddressFragment
+  }
+}
